@@ -1,0 +1,51 @@
+<html>
+    <head>
+        <title>query</title>
+        <link rel="stylesheet" href="index.css">
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <p class="title">設定</p>
+            <div class="settings">
+                クラスタ
+                <button v-on:click="databases.pop()">1つ削除</button>
+                <button v-on:click="databases.push({name:'', schema:''})">1つ追加</button>
+                <div v-for="db in databases">
+                    name: <input v-model="db.name"> , 
+                    schema: <input v-model="db.schema">
+                </div>
+            </div>
+
+            <div class="settings">
+                カラム
+                <button v-on:click="columns.pop()">1つ削除</button>
+                <button v-on:click="columns.push({tableName:'', columnName:'', format:''})">1つ追加</button>
+                <div v-for="col in columns">
+                    tableName: <input v-model="col.tableName"> , 
+                    columnName: <input v-model="col.columnName"> , 
+                    format: <input v-model="col.format">
+                </div>    
+            </div>
+
+            <hr>
+            <p class="title">カラム追加</p>
+            <div v-for="db in databases">
+                <p class="dbName">{{db.name}}</p>
+                <div v-for="col in columns">
+                    ALTER TABLE {{db.schema}}.{{col.tableName}} ADD {{col.columnName}} {{col.format}};
+                </div>
+            </div>
+
+            <p class="title">ロールバック</p>
+            <div v-for="db in databases">
+                <p class="dbName">{{db.name}}</p>
+                <div v-for="col in columns">
+                    ALTER TABLE {{db.schema}}.{{col.tableName}} DROP {{col.columnName}};
+                </div>
+            </div>
+
+        </div>
+        <script src="index.js"></script>
+    </body>
+</html>
