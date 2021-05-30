@@ -27,7 +27,10 @@
                     format: <input v-model="col.format">
                 </div>    
             </div>
-
+            <hr>
+            <p class="title">url</p>
+            <button v-on:click="makeUrl()">URL更新</button>
+            <a v-bind:href="url">{{urlText}}</a>
             <hr>
             <p class="title">カラム追加</p>
             <div v-for="db in databases">
